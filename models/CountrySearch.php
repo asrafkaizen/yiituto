@@ -58,9 +58,8 @@ class CountrySearch extends Country
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'population' => $this->population,
-        ]);
+        $query->andFilterCompare('population', '>'.$this->population
+        );
 
         $query->andFilterWhere(['like', 'code', $this->code])
             ->andFilterWhere(['like', 'name', $this->name]);

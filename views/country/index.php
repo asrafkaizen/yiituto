@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
+use app\models\Country;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CountrySearch */
@@ -26,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
           //  ['class' => 'yii\grid\SerialColumn'],
 
-            'code',
+            //'code',
+            [
+                'attribute' => 'code',
+                'filter' => ArrayHelper::map(Country::find()->asArray()->all(), 'code', 'code'),
+               // 'filter' => array("" => "all", "AU"=>"Aus","US"=>"United States", "MY" => "Malaysia"),
+               
+            ],
             'name',
             //'population',
             
@@ -40,13 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     elseif ($popu > 1000000)
                         $popu = number_format((float)$popu / 1000000, 2, '.', '')." million";
                     return $popu;
-                }
+                },
             ],
             
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
 
 </div>
