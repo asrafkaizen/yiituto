@@ -3,16 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Country;
-use app\models\CountrySearch;
+use app\models\Student;
+use app\models\StudentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Country;
+use yii\helpers\ArrayHelper;
 
 /**
- * CountryController implements the CRUD actions for Country model.
+ * StudentController implements the CRUD actions for Student model.
  */
-class CountryController extends Controller
+class StudentController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +32,12 @@ class CountryController extends Controller
     }
 
     /**
-     * Lists all Country models.
+     * Lists all Student models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CountrySearch();
+        $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,8 +47,8 @@ class CountryController extends Controller
     }
 
     /**
-     * Displays a single Country model.
-     * @param string $id
+     * Displays a single Student model.
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -58,13 +60,17 @@ class CountryController extends Controller
     }
 
     /**
-     * Creates a new Country model.
+     * Creates a new Student model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Country();
+        $model = new Student();
+
+        $country = Country::find()->all();
+        $country = ArrayHelper::map($country, 'id', 'name');
+        // $result = ArrayHelper::map($array, 'id', 'name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,19 +78,22 @@ class CountryController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'country' => $country,
         ]);
     }
 
     /**
-     * Updates an existing Country model.
+     * Updates an existing Student model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $country = Country::find()->all();
+        $country = ArrayHelper::map($country, 'id', 'name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,13 +101,14 @@ class CountryController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'country' => $country,
         ]);
     }
 
     /**
-     * Deletes an existing Country model.
+     * Deletes an existing Student model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -110,15 +120,15 @@ class CountryController extends Controller
     }
 
     /**
-     * Finds the Country model based on its primary key value.
+     * Finds the Student model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Country the loaded model
+     * @param integer $id
+     * @return Student the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Country::findOne($id)) !== null) {
+        if (($model = Student::findOne($id)) !== null) {
             return $model;
         }
 
