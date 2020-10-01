@@ -3,7 +3,11 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
-use app\models\Country;
+use kartik\field\FieldRange;
+use kartik\form\ActiveForm;
+ 
+$form = ActiveForm::begin();
+ 
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CountrySearch */
@@ -27,17 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
           //  ['class' => 'yii\grid\SerialColumn'],
-
-            //'code',
             [
                 'attribute' => 'code',
-                'filter' => ArrayHelper::map(Country::find()->asArray()->all(), 'code', 'code'),
+                'filter' => $countryList,
                // 'filter' => array("" => "all", "AU"=>"Aus","US"=>"United States", "MY" => "Malaysia"),
                
             ],
-            'name',
-            //'population',
-            
+            'name',            
             [
                 'label' => 'populasi',
                 'attribute' => 'population',
@@ -49,6 +49,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         $popu = number_format((float)$popu / 1000000, 2, '.', '')." million";
                     return $popu;
                 },
+                'filter' => false,
+                /*
+                'filter' => FieldRange::widget([
+                    'form' => $form,
+                    'model' => function($model){
+                        return $model->population;
+                    },
+                    'label' => 'Enter amount range',
+                    'attribute1' => 'population1',
+                    'attribute2' => 'population2',
+                    'type' => FieldRange::INPUT_SPIN,
+                ])
+                */
             ],
             
 

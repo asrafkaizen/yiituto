@@ -24,16 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+         //   ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'studentid',
+            [
+                'label' => 'Student ID',
+                'attribute' => 'studentid',
+                'value' => 'studentid',
+            ],
             [
                 'attribute' => 'country',
                 'value' => function($model){
                     return $model->country0->name;
                 },
             ],
-            'course',
+            [
+                'attribute' => 'course',
+                'value' => function($model){
+                    return $model->course;
+                },
+                'filter' => $courseList,
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
