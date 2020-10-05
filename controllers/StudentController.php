@@ -38,25 +38,28 @@ class StudentController extends Controller
     public function actionIndex()
     {
         /*
-        foreach (students as st_item):
-            $country_id = st_item->country0->id;
-            $country_name = st_item->country0->name;
-            masukkan dlm array list
-        endforeach
+        SELECT country.id, country.name
+        FROM country
+        INNER JOIN student ON country.id=student.country
         */
-    
+
+        $countryList = Yii::$app->db->createCommand('
+            SELECT country.id, country.name
+            FROM country
+            INNER JOIN student ON country.id=student.country
+        ')->queryAll();
+        $countryList = ArrayHelper::map($countryList, 'id', 'name');
+
 
         $searchModel = new StudentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $courseList = ArrayHelper::map(Student::find()->asArray()->all(), 'course', 'course');
-        $countryList = ArrayHelper::map(Country::find()->asArray()->all(), 'id', 'name');
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'courseList' => $courseList,
             'countryList' => $countryList,
-
         ]);
     }
 

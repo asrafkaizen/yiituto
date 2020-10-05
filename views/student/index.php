@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Student', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= implode("|", $countryList) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -36,6 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return $model->country0->name;
                 },
+                'filter' => $countryList,
+                //filter by country name
             ],
             [
                 'attribute' => 'course',
@@ -48,6 +51,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
 
 </div>
