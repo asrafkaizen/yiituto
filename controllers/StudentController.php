@@ -37,11 +37,6 @@ class StudentController extends Controller
      */
     public function actionIndex()
     {
-        /*
-        SELECT country.id, country.name
-        FROM country
-        INNER JOIN student ON country.id=student.country
-        */
 
         $countryList = Yii::$app->db->createCommand('
             SELECT country.id, country.name
