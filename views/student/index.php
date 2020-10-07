@@ -9,6 +9,9 @@ use yii\grid\GridView;
 
 $this->title = 'Students';
 $this->params['breadcrumbs'][] = $this->title;
+
+$value = 'cuba value';
+echo Html::textInput('yearFrom', $value);
 ?>
 <div class="student-index">
 
@@ -16,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Student', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= implode("|", $countryList) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
